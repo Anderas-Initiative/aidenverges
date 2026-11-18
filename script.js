@@ -1,64 +1,76 @@
+(() => {
+  "use strict";
 
-// Return to previous page
-function goBack() {
-    if (window.history.length > 1) {
-        window.history.back();
-    } else {
-        window.location.href = "/";
-    }
-}
+  const yearElement = document.getElementById("year");
+  const timeElement = document.getElementById("current-time");
+  const backButton = document.getElementById("go-back");
+  const particleContainer = document.getElementById("particles");
 
-// Current year
-document.getElementById("year").textContent =
-    new Date().getFullYear();
+  if (yearElement) {
+    yearElement.textContent = String(new Date().getFullYear());
+  }
 
-// Live clock
-function updateClock() {
+  const updateClock = () => {
+    if (!timeElement) return;
     const now = new Date();
+    timeElement.dateTime = now.toISOString();
+    timeElement.textContent = now.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    });
+  };
 
-    document.getElementById("current-time").textContent =
-        now.toLocaleTimeString("en-US", {
-            hour12: false
-        });
-}
+  updateClock();
+  window.setInterval(updateClock, 1000);
 
-updateClock();
-setInterval(updateClock, 1000);
+  if (backButton) {
+    backButton.addEventListener("click", () => {
+      // Avoid sending visitors back to the same missing URL.
+      if (window.history.length > 1 && document.referrer &&
+          new URL(document.referrer).origin === window.location.origin) {
+        window.history.back();
+      } else {
+        window.location.assign("/");
+      }
+    });
+  }
 
-// Interactive background particles
-const particleContainer = document.getElementById("particles");
+  const reduceMotion = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-for (let i = 0; i < 35; i++) {
-    const particle = document.createElement("span");
+  if (particleContainer && !reduceMotion) {
+    const fragment = document.createDocumentFragment();
 
-    particle.style.cssText = `
-        position: absolute;
-        width: ${Math.random() * 3 + 1}px;
-        height: ${Math.random() * 3 + 1}px;
-        background: #c084fc;
-        border-radius: 50%;
-        left: ${Math.random() * 100}%;
-        top: ${Math.random() * 100}%;
-        opacity: ${Math.random() * 0.5 + 0.1};
-        box-shadow: 0 0 10px #9333ea;
-        animation: particleFloat ${Math.random() * 8 + 5}s ease-in-out infinite alternate;
-    `;
-
-    particleContainer.appendChild(particle);
-}
-
-// Particle animation
-const style = document.createElement("style");
-
-style.textContent = `
-    @keyframes particleFloat {
-        from {
-            transform: translateY(0);
-        }
-        to {
-            transform: translateY(-35px);
-        }
+    for (let i = 0; i < 28; i += 1) {
+      const particle = document.createElement("span");
+      const size = Math.random() * 2 + 1;
+      particle.className = "particle";
+      particle.style.cssText = [
+        "position:absolute",
+        `width:${size}px`,
+        `height:${size}px`,
+        `left:${Math.random() * 100}%`,
+        `top:${Math.random() * 100}%`,
+        `opacity:${Math.random() * 0.45 + 0.1}`,
+        "border-radius:50%",
+        "background:#c084fc",
+        "box-shadow:0 0 10px #9333ea",
+        `animation:particleFloat ${Math.random() * 8 + 5}s ease-in-out infinite alternate`
+      ].join(";");
+      fragment.appendChild(particle);
     }
-`;
 
-document.head.appendChild(style);
+    particleContainer.appendChild(fragment);
+
+    const animationStyle = document.createElement("style");
+    animationStyle.textContent = `
+      @keyframes particleFloat {
+        from { transform: translateY(0); }
+        to { transform: translateY(-35px); }
+      }
+    `;
+    document.head.appendChild(animationStyle);
+  }
+})();
