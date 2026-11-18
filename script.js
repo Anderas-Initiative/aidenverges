@@ -1,27 +1,64 @@
-(() => {
-  const lightbox = document.getElementById('lightbox');
-  const openButton = document.getElementById('openImage');
-  const closeButton = document.getElementById('closeImage');
 
-  function openLightbox() {
-    lightbox.classList.add('open');
-    lightbox.setAttribute('aria-hidden', 'false');
-    closeButton.focus();
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    openButton.focus();
-  }
+// Return to previous page
+function goBack() {
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = "/";
+    }
+}
 
-  openButton.addEventListener('click', openLightbox);
-  closeButton.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', (event) => {
-    if (event.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-  });
-})();
+// Current year
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+// Live clock
+function updateClock() {
+    const now = new Date();
+
+    document.getElementById("current-time").textContent =
+        now.toLocaleTimeString("en-US", {
+            hour12: false
+        });
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+// Interactive background particles
+const particleContainer = document.getElementById("particles");
+
+for (let i = 0; i < 35; i++) {
+    const particle = document.createElement("span");
+
+    particle.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 3 + 1}px;
+        height: ${Math.random() * 3 + 1}px;
+        background: #c084fc;
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        opacity: ${Math.random() * 0.5 + 0.1};
+        box-shadow: 0 0 10px #9333ea;
+        animation: particleFloat ${Math.random() * 8 + 5}s ease-in-out infinite alternate;
+    `;
+
+    particleContainer.appendChild(particle);
+}
+
+// Particle animation
+const style = document.createElement("style");
+
+style.textContent = `
+    @keyframes particleFloat {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-35px);
+        }
+    }
+`;
+
+document.head.appendChild(style);
