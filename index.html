@@ -1,81 +1,67 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#09090f">
-    <meta name="description" content="The page you're looking for could not be found.">
-
-    <title>404 — Page Not Found</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09090f">
+  <meta name="description" content="The page you're looking for could not be found.">
+  <title>404 — Page Not Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
 </head>
 <body>
+  <div class="background-effects" aria-hidden="true">
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+    <div id="particles"></div>
+  </div>
 
-    <div class="background-effects">
-        <div class="glow glow-one"></div>
-        <div class="glow glow-two"></div>
-        <div id="particles"></div>
+  <header class="navbar">
+    <a class="brand" href="/" aria-label="Your Brand home">
+      <span class="brand-icon" aria-hidden="true">V</span>
+      <span>YOUR BRAND</span>
+    </a>
+    <div class="status" aria-label="Website status: operational">
+      <span class="status-dot" aria-hidden="true"></span>
+      SYSTEM OPERATIONAL
+    </div>
+  </header>
+
+  <main class="error-container">
+    <div class="error-label">
+      <span class="label-line" aria-hidden="true"></span>
+      ERROR CODE: 404
+      <span class="label-line" aria-hidden="true"></span>
     </div>
 
-    <header class="navbar">
-        <a href="/" class="brand">
-            <span class="brand-icon">V</span>
-            <span>YOUR BRAND</span>
-        </a>
+    <h1 class="error-number" aria-label="404">4<span>0</span>4</h1>
+    <h2>Well, this is awkward.</h2>
+    <p class="description">
+      The page you're looking for doesn't exist, has been moved,
+      or may have taken an unexpected vacation.
+    </p>
 
-        <span class="status">
-            <span class="status-dot"></span>
-            SYSTEM OPERATIONAL
-        </span>
-    </header>
+    <div class="error-actions">
+      <a class="btn btn-primary" href="/">
+        <span>Return Home</span><span class="arrow" aria-hidden="true">↗</span>
+      </a>
+      <button class="btn btn-secondary" id="go-back" type="button">Go Back</button>
+    </div>
 
-    <main class="error-container">
+    <div class="error-details">
+      <span>HTTP STATUS</span>
+      <strong>404 NOT FOUND</strong>
+      <span class="separator" aria-hidden="true">/</span>
+      <time id="current-time" aria-label="Current local time">--:--:--</time>
+    </div>
+  </main>
 
-        <div class="error-label">
-            <span class="label-line"></span>
-            ERROR CODE: 404
-            <span class="label-line"></span>
-        </div>
-
-        <h1 class="error-number">4<span>0</span>4</h1>
-
-        <h2>Well, this is awkward.</h2>
-
-        <p class="description">
-            The page you're looking for doesn't exist, has been moved,
-            or may have taken an unexpected vacation.
-        </p>
-
-        <div class="error-actions">
-            <a href="/" class="btn btn-primary">
-                <span>Return Home</span>
-                <span class="arrow">↗</span>
-            </a>
-
-            <button class="btn btn-secondary" onclick="goBack()">
-                Go Back
-            </button>
-        </div>
-
-        <div class="error-details">
-            <span>HTTP STATUS</span>
-            <strong>404 NOT FOUND</strong>
-            <span class="separator">/</span>
-            <span id="current-time">00:00:00</span>
-        </div>
-
-    </main>
-
-    <footer>
-        <span>© <span id="year"></span> YOUR BRAND. All rights reserved.</span>
-        <span class="footer-right">BUILT WITH PRECISION.</span>
-    </footer>
-
-    <script src="script.js"></script>
+  <footer>
+    <span>© <span id="year"></span> YOUR BRAND. All rights reserved.</span>
+    <span class="footer-right">BUILT WITH PRECISION.</span>
+  </footer>
 </body>
 </html>
